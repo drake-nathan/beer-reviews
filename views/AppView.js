@@ -6,7 +6,10 @@ const AppView = Backbone.View.extend({
   events: {
     'click .submit-beer': 'createBeer',
     'click .view-beer': 'viewBeer',
+    'click .back': 'goBack',
   },
+
+  detailView: null,
 
   initialize() {
     this.listenTo(this.model.get('beers'), 'add', this.renderBeer);
@@ -46,7 +49,21 @@ const AppView = Backbone.View.extend({
     );
   },
 
-  renderDetailView() {},
+  renderDetailView() {
+    if (this.detailView) {
+      this.detailView.remove();
+    }
+
+    this.detailView = new BeerDetailView({
+      model: this.model.get('current_beer'),
+    });
+
+    this.$('.reviews-container').append(this.detailView.render().el);
+  },
+
+  goBack() {
+    this.model.showBeers();
+  },
 
   renderBeer(beer) {
     const beerView = new BeerView({ model: beer });
