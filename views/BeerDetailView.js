@@ -32,4 +32,10 @@ const BeerDetailView = Backbone.View.extend({
     const reviewView = new ReviewView({ model: review });
     this.$('.review-list').append(reviewView.render().el);
   },
+
+  renderAllReviews() {
+    this.model.get('reviews').each(function (m) {
+      this.renderReview(m);
+    }, this);
+  },
 });

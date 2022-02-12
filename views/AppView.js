@@ -12,6 +12,7 @@ const AppView = Backbone.View.extend({
   detailView: null,
 
   initialize() {
+    this.listenTo(this.model.get('beers'), 'reset', this.renderBeers);
     this.listenTo(this.model.get('beers'), 'add', this.renderBeer);
     this.listenTo(this.model, 'change:show_reviews', this.renderPage);
     this.listenTo(this.model, 'change:current_beer', this.renderDetailView);
@@ -57,8 +58,9 @@ const AppView = Backbone.View.extend({
     this.detailView = new BeerDetailView({
       model: this.model.get('current_beer'),
     });
-
     this.$('.reviews-container').append(this.detailView.render().el);
+
+    this.detailView.renderAllReviews();
   },
 
   goBack() {

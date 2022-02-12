@@ -12,12 +12,12 @@ const BeerView = Backbone.View.extend({
   },
 
   events: {
-    'click .remove': 'delete',
+    'click .remove': 'removeBeer',
     'click .edit': 'editBeer',
     'keypress .edit-mode': 'handleBeerEdit',
   },
 
-  delete() {
+  removeBeer() {
     this.model.destroy();
   },
 
